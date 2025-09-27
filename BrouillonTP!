@@ -1,0 +1,92 @@
+//
+// Ce programme a été crée pour le but de faire les facturations à une entreprise
+// au nom La Boite À Savon. Dedans le cadre academique de l'université UQAM.
+//
+// Nom: Erika Marcela Rivas
+// @version TP1 - 13 Automne 2025
+
+
+public class Facturation{
+    public static void main(String[] argms) {
+        // Declarations de constantes: (informations déjà déclarés qui ne changent pas)
+
+        //      - Constantes pour les prix:
+        final double PRIX_LAVAGE_EXT = 25.50;
+        final double PRIX_LAVAGE_INT = 29.95;
+        final double PRIX_LAVAGE_COMBO = 50.00;
+        final double PRIX_CIRAGE = 28.65;
+
+        //      - Constantes pour les taxes:
+        final double TAUX_TPS = 5;
+        final double TAUX_TVQ = 9.975;
+
+        //      - Constantes pour les textes:
+        final String MENUFACTURE = "\n************************************\n" +
+                "*   L A  B O I T E  A  S A V O N   *\n" +
+                "************************************\n" +
+                "          **FACTURATION**      \n" +
+                "------ \n" +
+                " MENU \n" +
+                "------ \n" +
+                "1. PREPARER UNE FACTURE.\n" +
+                "2. AFFICHER LE MONTANT DES RECETTES.\n" +
+                "3. REINITIALISER LE MONTANT DES RECETTES.\n" +
+                "4. QUITTER LE PROGRAMME.\n\n" +
+                "Entrez votre choix : \n";
+        final String MESSAGE_ERREUR = "ERREUR ! Choix de menu invalide. Recommencez...";
+        final String DEMANDER_NOM = "Entrez le nom du client :";
+        final String DEMANDER_ADRESSE = "Entrez le adresse du client :";
+        final String DEMANDER_DATE = "Entrez la date de facturation :";
+        final String DEMANDER_NBR_AUTO = "Entrez le nombre de voitures :";
+        final String SUB_MENU_LAVAGE = "----------\n" +
+                "A) Lavage exterieur.\n" +
+                "B) Lavage interieur.\n" +
+                "C) Lavage exterieur et interieur\n\n" +
+                "Entrez le type de lavage :";
+        final String MSG_ERREUR_LAVAGE = "ERREUR ! Entrez A, B, C. Recommencez...";
+        final String DEMANDER_CIRE = "Voulez-vous ajouter l'aplication d'une cire a la main (O/N) ? ";
+
+        final String MSGFINPROGRAMME = "\n\nFin normale du programme.";
+        // Declarations de variables (informations qui peuvent être modifiées)
+        int numeroFacture = 1000; // débute à 1000
+        double recettes = 0.0;// Total $$ recettes avant taxes.
+        boolean quitter; // Boucle pour finir programme.
+
+        char choixMenu; // Option du menu
+        String menuOption1;
+        String nomClient;
+        String adresseClient;
+        String dateFacture;
+        String nbrAuto;
+        String menuOption2;
+        String menuOption3;
+        String menuOption4;
+
+        do {
+            //afficher menu
+            System.out.print(MENUFACTURE);
+
+            choixMenu = Clavier.lireCharLn();
+
+            //TRAITEMENT OPTION 1
+            if (choixMenu == '1') {
+
+                System.out.println("\nCode du traitement de l'option 1 ici...");
+
+
+                //TRAITEMENT OPTION 2
+            } else if (choixMenu == '2') {
+
+                System.out.println("\nCode du traitement de l'option 2 ici...");
+
+                //ERREUR CHOIX MENU...
+            } else if (choixMenu != '3') {
+                System.out.println(MESSAGE_ERREUR);
+            }
+
+        } while (choixMenu != '3');
+
+        System.out.println(MSGFINPROGRAMME);
+    }
+}
+
