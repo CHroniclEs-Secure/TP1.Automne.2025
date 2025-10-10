@@ -6,22 +6,21 @@
 // @version TP1 - 13 Automne 2025
 
 
-public class Facturation{
-    public static void main(String[] argms) {
-        // Declarations de constantes: (informations déjà déclarés qui ne changent pas)
 
-        //      - Constantes pour les prix:
-        final double PRIX_LAVAGE_EXT = 25.50;
-        final double PRIX_LAVAGE_INT = 29.95;
-        final double PRIX_LAVAGE_COMBO = 50.00;
-        final double PRIX_CIRAGE = 28.65;
+public class facturation {
+    // Declarations de constantes: (informations déjà déclarés qui ne changent pas)
+    //      - Constantes pour les prix:
+    public static final double PRIX_LAVAGE_EXT = 25.50;
+    public static final double PRIX_LAVAGE_INT = 29.95;
+    public static final double PRIX_LAVAGE_COMBO = 50.00;
+    public static final double PRIX_CIRAGE = 28.65;
 
-        //      - Constantes pour les taxes:
-        final double TAUX_TPS = 5;
-        final double TAUX_TVQ = 9.975;
+    //      - Constantes pour les taxes:
+    public static final double TAUX_TPS = 5;
+    public static final double TAUX_TVQ = 9.975;
 
-        //      - Constantes pour les textes:
-        final String MENUFACTURE = "\n************************************\n" +
+    //      - Constantes pour les textes(chaine des charactheres):
+    public static final String MENU_FACTURE = "\n\n************************************\n" +
                 "*   L A  B O I T E  A  S A V O N   *\n" +
                 "************************************\n" +
                 "          **FACTURATION**      \n" +
@@ -31,62 +30,117 @@ public class Facturation{
                 "1. PREPARER UNE FACTURE.\n" +
                 "2. AFFICHER LE MONTANT DES RECETTES.\n" +
                 "3. REINITIALISER LE MONTANT DES RECETTES.\n" +
-                "4. QUITTER LE PROGRAMME.\n\n" +
-                "Entrez votre choix : \n";
-        final String MESSAGE_ERREUR = "ERREUR ! Choix de menu invalide. Recommencez...";
-        final String DEMANDER_NOM = "Entrez le nom du client :";
-        final String DEMANDER_ADRESSE = "Entrez le adresse du client :";
-        final String DEMANDER_DATE = "Entrez la date de facturation :";
-        final String DEMANDER_NBR_AUTO = "Entrez le nombre de voitures :";
-        final String SUB_MENU_LAVAGE = "----------\n" +
+                "4. QUITTER LE PROGRAMME.\n\n";
+    public static final String MSG_CHOIX_MENU = "Entrez votre choix :";
+    public static final String MESSAGE_ERREUR = "\nERREUR ! Choix de menu invalide. Recommencez...\n";
+    public static final String DEMANDER_NOM = "Entrez le nom du client :";
+    public static final String DEMANDER_ADRESSE = "Entrez l'adresse du client :";
+    public static final String DEMANDER_DATE = "Entrez la date de facturation :";
+    public static final String DEMANDER_NBR_AUTO = "Entrez le nombre de voitures :";
+    public static final String MSG_ERREUR_NBRAUTO = "ERREUR ! Entrez un nombre entre 1 à 4. Recommencez...";
+    public static final String SUB_MENU_LAVAGE = "----------\n" +
                 "A) Lavage exterieur.\n" +
                 "B) Lavage interieur.\n" +
                 "C) Lavage exterieur et interieur\n\n" +
                 "Entrez le type de lavage :";
-        final String MSG_ERREUR_LAVAGE = "ERREUR ! Entrez A, B, C. Recommencez...";
-        final String DEMANDER_CIRE = "Voulez-vous ajouter l'aplication d'une cire a la main (O/N) ? ";
-
-        final String MSGFINPROGRAMME = "\n\nFin normale du programme.";
-        // Declarations de variables (informations qui peuvent être modifiées)
-        int numeroFacture = 1000; // débute à 1000
-        double recettes = 0.0;// Total $$ recettes avant taxes.
-        boolean quitter; // Boucle pour finir programme.
-
-        char choixMenu; // Option du menu
-        String menuOption1;
-        String nomClient;
-        String adresseClient;
-        String dateFacture;
-        String nbrAuto;
-        String menuOption2;
-        String menuOption3;
-        String menuOption4;
-
+    public static final String MSG_ERREUR_LAVAGE = "ERREUR ! Entrez A, B ou C. Recommencez...";
+    public static final String DEMANDER_CIRE = "Voulez-vous l'application d'une cire à la main (O/N) ? ";
+    public static final String MSG_ON_ERR = "ERREUR ! Veuillez repondre par O ou N. Recommencez...\n";
+    public static final String MSG_ENTER = "\nAppuyez sur <ENTREE> pour continuer\n";
+    public static final String RECET = "\n--------\nRECETTES\n---------\n";
+    public static final String REIN_RECET = "\n-----------------------------\nREINITIALISATION DES RECETTES\n-----------------------------\n";
+    public static final String DEMANDE_REI = "\nVoulez-vous vraiment reinitialiser le montant des recettes (O/N) ? ";
+    public static final String FIN_MSG = "\nF I N   N O R M A L E   D U   P R O G R A M M E\n";
+        
+        
+    
+    // Helper method: read a single character answer O/N //(case-insensitive) with validation (Exemple gave by AI)
+    private static char lireOuiNon(String prompt) {
+        char reponse;
         do {
-            //afficher menu
-            System.out.print(MENUFACTURE);
-
-            choixMenu = Clavier.lireCharLn();
-
-            //TRAITEMENT OPTION 1
-            if (choixMenu == '1') {
-
-                System.out.println("\nCode du traitement de l'option 1 ici...");
-
-
-                //TRAITEMENT OPTION 2
-            } else if (choixMenu == '2') {
-
-                System.out.println("\nCode du traitement de l'option 2 ici...");
-
-                //ERREUR CHOIX MENU...
-            } else if (choixMenu != '3') {
-                System.out.println(MESSAGE_ERREUR);
+            System.out.print(prompt);
+            reponse = Clavier.lireCharLn();
+            reponse = Character.toUpperCase(reponse);
+            if (reponse != 'O' && reponse != 'N') {
+                System.out.println(MSG_ON_ERR);
             }
+        } while (reponse != 'O' && reponse != 'N');
+        return reponse;
+    }
 
-        } while (choixMenu != '3');
+    // Helper method: compute tax with rounding to 2 decimals //(Exemple gave by AI June)
+    private static double calculerTaxeArrondie(double montant, double tauxPourcent) {
+        double taxe = montant * tauxPourcent / 100.0;
+        return Math.round(taxe * 100.0) / 100.0; // arrondi standard à 2 décimales
+    }
 
-        System.out.println(MSGFINPROGRAMME);
+    public static void main (String[] argms) {
+        
+        // Declarations de variables (informations qui peuvent être modifiées)
+        
+        //Variables de nombres:
+        int numeroFacture = 1000;   // facture débute à 1000.
+        double recettes = 0.0;      // total $$ recettes avant taxes.
+        boolean quitterMenu = false;        // boucle pour finalizer le programme.
+        
+        //Variable charactère
+        char choix_menu;                // caractere numero de 1 à 4, inclusivement.
+        String nomClient;               // Nom du client
+        String adresseClient;           // Information address client
+        String dateFacture;             // date du jour de la facturation
+        int nbrAuto;                    // nombre d'autos du client à laver de 1 à 4
+        char choixLavage;               // options ABC seulement, validation
+        char optionCirage;              // reponce O ou N, validation
+
+        //variable pour reinitialiser
+        char reinitialiser;
+
+        while (!quitterMenu) {                    //boucle debut du programme
+            System.out.print(MENU_FACTURE);       //message des choix
+            System.out.print(MSG_CHOIX_MENU);     //question pour les choix
+
+                                                  // Validation 1 - 4
+            do {
+                choix_menu = Clavier.lireCharLn();   //varianle pour lire le choix
+                if (choix_menu < '1' || choix_menu > '4') { // si choix_menu est + petit q 1 ou + grande q 4
+                    System.out.print(MESSAGE_ERREUR);       //Message erreur
+                    System.out.print(MENU_FACTURE);         // Pose de nouveau les questions
+                    System.out.print(MSG_CHOIX_MENU);       //
+                }
+            } while (choix_menu < '1' || choix_menu > '4');  // tant que l'information n'est pas valide
+
+            switch (choix_menu) {                   // Control flow statement
+
+                                                    // OPTION 1 : PREPARER UNE FACTURE
+                case '1' : {
+
+                    // Saisies client
+                    System.out.print(DEMANDER_NOM);     //question pour le nom client
+                    nomClient = Clavier.lireString();   // variable qui lit le nom du client
+                    System.out.print(DEMANDER_ADRESSE); //question pour l'adresse du client
+                    adresseClient = Clavier.lireString();//variable qui lit l'adresse du client
+                    System.out.print(DEMANDER_DATE);     //question pour le jour de la facture
+                    dateFacture = Clavier.lireString();  //variable qui lit le jour de la facturation
+
+                    // Valider nombre des voitures 1 - 4
+                    do {
+                        System.out.println();
+                        System.out.print(DEMANDER_NBR_AUTO); //constante de question autos
+                        nbrAuto = Clavier.lireInt();         // variable qui lit le nombre d'autos (Entier) 
+                        if (nbrAuto < 1 || nbrAuto > 4) {    // validation entre 1 et 4
+                            System.out.println(MSG_ERREUR_NBRAUTO);  // message erreur
+                        }
+                    } while (nbrAuto < 1 || nbrAuto > 4);
+
+                        // en train de retravailler pour que ca soit qui est demandé et pas AI fait :)
+                                                      // OPTION 4 : QUITTER
+                case '4' : {
+                    quitterMenu = true;               // boleen pour sortir du programme
+                    System.out.print(FIN_MSG);        // affichage du programme
+                    break;
+                }
+            }
+        }
     }
 }
-
+   
