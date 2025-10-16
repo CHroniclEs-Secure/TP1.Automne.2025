@@ -2,23 +2,23 @@
 // Ce programme a été crée dans le but de créer des factures à une entreprise
 // au nom La Boite À Savon. Dedans le cadre academique de l'université UQAM.
 //
-// Nom: Erika Marcela Rivas
+// Nom: Erika Rivas
 // @version TP1 - 13 Automne 2025
 
 
 
-public class facturation {
+public class Facturation {
     // Declarations de constantes: (informations déjà déclarés qui ne changent pas)
     //      - Constantes pour les prix:
-    public static final double PRIX_LAVAGE_EXT = 25.50;
-    public static final double PRIX_LAVAGE_INT = 29.95;
-    public static final double PRIX_LAVAGE_COMBO = 50.00;
-    public static final double PRIX_CIRAGE = 28.65;
+    public static final double PRIX_LAVAGE_EXT = 25.50;     // Prix du lavage exterieur
+    public static final double PRIX_LAVAGE_INT = 29.95;     // Prix du lavage interieur
+    public static final double PRIX_LAVAGE_COMBO = 50.00;   // Prix du lavage exterieur et interieur
+    public static final double PRIX_CIRAGE = 28.65;         // Prix du cirage
 
     //      - Constantes pour les taxes:
-    public static final double TAUX_TPS = 5;
-    public static final double TAUX_TVQ = 9.975;
-
+    public static final double TAUX_TPS = 5;                // TAX TPS 5%
+    public static final double TAUX_TVQ = 9.975;            // TAX TVQ 9.975%
+    
     //      - Constantes pour les textes(chaine des charactheres):
     public static final String MENU_FACTURE = "\n\n************************************\n" +
                 "*   L A  B O I T E  A  S A V O N   *\n" +
@@ -31,49 +31,45 @@ public class facturation {
                 "2. AFFICHER LE MONTANT DES RECETTES.\n" +
                 "3. REINITIALISER LE MONTANT DES RECETTES.\n" +
                 "4. QUITTER LE PROGRAMME.\n\n";
+
     public static final String MSG_CHOIX_MENU = "Entrez votre choix :";
-    public static final String MESSAGE_ERREUR = "\nERREUR ! Choix de menu invalide. Recommencez...\n";
+    public static final String MESSAGE_ERREUR = "\nERREUR ! Choix de menu invalide. Recommencez...\n"; //Validation          
+    
+                // Questions pour l'option 1
     public static final String DEMANDER_NOM = "Entrez le nom du client :";
-    public static final String DEMANDER_ADRESSE = "Entrez l'adresse du client :";
+    public static final String DEMANDER_ADRESSE = "Entrez le adresse du client :";
     public static final String DEMANDER_DATE = "Entrez la date de facturation :";
     public static final String DEMANDER_NBR_AUTO = "Entrez le nombre de voitures :";
-    public static final String MSG_ERREUR_NBRAUTO = "ERREUR ! Entrez un nombre entre 1 à 4. Recommencez...";
+    
+    public static final String MSG_ERREUR_NBRAUTO = 
+                "ERREUR ! Entrez un bombre entre 1 à 4. Recommencez..."; //validation
+    
+                // Sub-Menu des options de lavage
     public static final String SUB_MENU_LAVAGE = "----------\n" +
                 "A) Lavage exterieur.\n" +
                 "B) Lavage interieur.\n" +
                 "C) Lavage exterieur et interieur\n\n" +
                 "Entrez le type de lavage :";
-    public static final String MSG_ERREUR_LAVAGE = "ERREUR ! Entrez A, B ou C. Recommencez...";
-    public static final String DEMANDER_CIRE = "Voulez-vous l'application d'une cire à la main (O/N) ? ";
-    public static final String MSG_ON_ERR = "ERREUR ! Veuillez repondre par O ou N. Recommencez...\n";
+                
+    public static final String MSG_ERREUR_LAVAGE = 
+                "ERREUR ! Entrez A, B ou C. Recommencez...";  // Validation
+                
+                //Message demandant si le client veut le cire ou non.
+    public static final String DEMANDER_CIRE = "Voulez-vous ajouter l'aplication d'une cire a la main (O/N) ? ";
+    public static final String MSG_ON_ERR = 
+                "ERREUR ! Veuillez repondre par O ou N. Recommencez...\n"; // Vallidation
+                
+                // Pause, demande au client d'appuyer enter pour continuer            
     public static final String MSG_ENTER = "\nAppuyez sur <ENTREE> pour continuer\n";
+    
+                //
     public static final String RECET = "\n--------\nRECETTES\n---------\n";
     public static final String REIN_RECET = "\n-----------------------------\nREINITIALISATION DES RECETTES\n-----------------------------\n";
-    public static final String DEMANDE_REI = "\nVoulez-vous vraiment reinitialiser le montant des recettes (O/N) ? ";
+    public static final String DEMANDE_REI = "\nVoulez vous vraiment reinitialiser le montant des recettes (O/N) ? \n";
     public static final String FIN_MSG = "\nF I N   N O R M A L E   D U   P R O G R A M M E\n";
         
         
     
-    // Helper method: read a single character answer O/N //(case-insensitive) with validation (Exemple gave by AI)
-    private static char lireOuiNon(String prompt) {
-        char reponse;
-        do {
-            System.out.print(prompt);
-            reponse = Clavier.lireCharLn();
-            reponse = Character.toUpperCase(reponse);
-            if (reponse != 'O' && reponse != 'N') {
-                System.out.println(MSG_ON_ERR);
-            }
-        } while (reponse != 'O' && reponse != 'N');
-        return reponse;
-    }
-
-    // Helper method: compute tax with rounding to 2 decimals //(Exemple gave by AI June)
-    private static double calculerTaxeArrondie(double montant, double tauxPourcent) {
-        double taxe = montant * tauxPourcent / 100.0;
-        return Math.round(taxe * 100.0) / 100.0; // arrondi standard à 2 décimales
-    }
-
     public static void main (String[] argms) {
         
         // Declarations de variables (informations qui peuvent être modifiées)
@@ -81,7 +77,7 @@ public class facturation {
         //Variables de nombres:
         int numeroFacture = 1000;   // facture débute à 1000.
         double recettes = 0.0;      // total $$ recettes avant taxes.
-        boolean quitterMenu = false;        // boucle pour finalizer le programme.
+        boolean quitterMenu = false;        // boleen pour finalizer le programme.
         
         //Variable charactère
         char choix_menu;                // caractere numero de 1 à 4, inclusivement.
@@ -91,9 +87,9 @@ public class facturation {
         int nbrAuto;                    // nombre d'autos du client à laver de 1 à 4
         char choixLavage;               // options ABC seulement, validation
         char optionCirage;              // reponce O ou N, validation
-
-        //variable pour reinitialiser
-        char reinitialiser;
+        double recettesFacture = 0.0;   // affichage des additions $$$ de lavages
+        double soldeRecette = 0.0;              // variable pour garder la somme de chaque facture
+        double reinitialiser;           //variable pour reinitialiser
 
         while (!quitterMenu) {                    //boucle debut du programme
             System.out.print(MENU_FACTURE);       //message des choix
@@ -105,13 +101,13 @@ public class facturation {
                 if (choix_menu < '1' || choix_menu > '4') { // si choix_menu est + petit q 1 ou + grande q 4
                     System.out.print(MESSAGE_ERREUR);       //Message erreur
                     System.out.print(MENU_FACTURE);         // Pose de nouveau les questions
-                    System.out.print(MSG_CHOIX_MENU);       //
+                    System.out.print(MSG_CHOIX_MENU);       // Afficher le menu des options
                 }
             } while (choix_menu < '1' || choix_menu > '4');  // tant que l'information n'est pas valide
 
-            switch (choix_menu) {                   // Control flow statement
+            switch (choix_menu) {
 
-                                                    // OPTION 1 : PREPARER UNE FACTURE
+                // ---------- OPTION 1 : PREPARER UNE FACTURE ----------
                 case '1' : {
 
                     // Saisies client
@@ -122,7 +118,7 @@ public class facturation {
                     System.out.print(DEMANDER_DATE);     //question pour le jour de la facture
                     dateFacture = Clavier.lireString();  //variable qui lit le jour de la facturation
 
-                    // Valider nombre des voitures 1 - 4
+                    // Valider nb voitures 1..4
                     do {
                         System.out.println();
                         System.out.print(DEMANDER_NBR_AUTO); //constante de question autos
@@ -132,15 +128,168 @@ public class facturation {
                         }
                     } while (nbrAuto < 1 || nbrAuto > 4);
 
-                        // en train de retravailler pour que ca soit qui est demandé et pas AI fait :)
-                                                      // OPTION 4 : QUITTER
+                    // Ces variables servent à mémoriser les informations de chaque voiture sans utiliser de tableaux
+                    String lavage1 = "", lavage2 = "", lavage3 = "", lavage4 = "";
+                    double prix1 = 0.0, prix2 = 0.0, prix3 = 0.0, prix4 = 0.0; // initialisation des prix 
+                                                                        // à zero pour ne pas avoir des bugs
+
+                    double sousTotal = 0.0;  // initialisation à zero pour ne pas avoir des bugs
+
+                    // Pour chaque voiture : poser questions, calculer, mémoriser
+                    // Boucle qui se répète pour chaque voiture à laver
+                    // 'nbrAuto' contient le nombre de voitures que le client a indiqué (de 1 à 4
+                    for (int v = 1; v <= nbrAuto; v++) {
+                        System.out.println();
+                        System.out.println("Voiture #" + v);//Affiche le numéro de la voiture en cours de traitement
+                        System.out.println("----------");
+
+                        // Boucle de validation pour le type de lavage (A, B ou C
+                        do {
+                            System.out.print(SUB_MENU_LAVAGE);// Affiche le sous-menu des types de lavage (A, B, C)
+                            choixLavage = Clavier.lireCharLn();
+                            if (choixLavage >= 'a' && choixLavage <= 'z') {
+                                choixLavage = (char)(choixLavage - 'a' + 'A'); // convert minuscule en majouscule
+                            }
+                            if (choixLavage != 'A' && choixLavage != 'B' && choixLavage != 'C') {  //Validation
+                                System.out.println(MSG_ERREUR_LAVAGE); //Message erreur
+                            }
+                        } while (choixLavage != 'A' && choixLavage != 'B' && choixLavage != 'C');
+
+                        double prix; 
+                        String lavage;
+
+                        if (choixLavage == 'A') {  //choix lavage exterieur
+                            prix = PRIX_LAVAGE_EXT;
+                            lavage = "Lavage exterieur";
+                            // cire ?
+                            do {
+                                System.out.print(DEMANDER_CIRE);
+                                optionCirage = Clavier.lireCharLn();
+                                if (optionCirage >= 'a' && optionCirage <= 'z')
+                                    optionCirage = (char)(optionCirage - 'a' + 'A');
+                                if (optionCirage != 'O' && optionCirage != 'N')
+                                    System.out.println(MSG_ON_ERR);
+                            } while (optionCirage != 'O' && optionCirage != 'N');
+                            if (optionCirage == 'O') {
+                                prix += PRIX_CIRAGE;
+                                lavage = "Lavage exterieur (avec cire)";
+                            }
+                        } else if (choixLavage == 'B') {  // choix lavage interieur seulement
+                            prix = PRIX_LAVAGE_INT;
+                            lavage = "Lavage interieur";
+                        } else { // 'C'   // choix lavage exterieur et interieur
+                            prix = PRIX_LAVAGE_COMBO;
+                            lavage = "Lavage exterieur et interieur";
+                            do {
+                                System.out.print(DEMANDER_CIRE);
+                                optionCirage = Clavier.lireCharLn();
+                                if (optionCirage >= 'a' && optionCirage <= 'z')
+                                    optionCirage = (char)(optionCirage - 'a' + 'A');
+                                if (optionCirage != 'O' && optionCirage != 'N')
+                                    System.out.println(MSG_ON_ERR);
+                            } while (optionCirage != 'O' && optionCirage != 'N');
+                            if (optionCirage == 'O') {
+                                prix += PRIX_CIRAGE;
+                                lavage = "Lavage exterieur et interieur (avec cire)";
+                            }
+                        }
+						// variables pour garder l'information du type du lavage et le prix selon le nombre des voitures.
+                        if (v == 1) { lavage1 = lavage; prix1 = prix; }
+                        if (v == 2) { lavage2 = lavage; prix2 = prix; }
+                        if (v == 3) { lavage3 = lavage; prix3 = prix; }
+                        if (v == 4) { lavage4 = lavage; prix4 = prix; }
+
+                        sousTotal += prix;
+                    }
+
+                    // Impression facture en un seul bloc
+                    System.out.println();
+                    System.out.println("FACTURE");
+                    System.out.println("----------------------------------------------------------");
+                    System.out.println();
+                    System.out.println(nomClient);
+                    System.out.println(adresseClient);
+                    System.out.println();
+                    System.out.printf("NO FACTURE : %d%n", numeroFacture);
+                    System.out.printf("DATE       : %s%n", dateFacture);
+                    System.out.println();
+                    System.out.println();
+                    System.out.println("DESCRIPTION                                |    MONTANT");
+                    System.out.println("----------------------------------------------------------");
+
+                    if (nbrAuto >= 1) System.out.printf("%-42s | %9.2f $%n", lavage1, prix1);
+                    if (nbrAuto >= 2) System.out.printf("%-42s | %9.2f $%n", lavage2, prix2);
+                    if (nbrAuto >= 3) System.out.printf("%-42s | %9.2f $%n", lavage3, prix3);
+                    if (nbrAuto == 4) System.out.printf("%-42s | %9.2f $%n", lavage4, prix4);
+
+                    System.out.println("                                           |         ");
+
+                    // Taxes (arrondi demandé)
+                    double tps = sousTotal * TAUX_TPS / 100.0;
+                    tps = Math.round((int)(tps * 1000) / 10.0) / 100.0;
+                    double tvq = sousTotal * TAUX_TVQ / 100.0;
+                    tvq = Math.round((int)(tvq * 1000) / 10.0) / 100.0;
+                    double total = sousTotal + tps + tvq;
+
+                    System.out.printf("%-42s | %9.2f $%n", "Sous-total", sousTotal);
+                    System.out.printf("%-42s | %9.2f $%n", "TPS", tps);
+                    System.out.printf("%-42s | %9.2f $%n", "TVQ", tvq);
+                    System.out.println("----------------------------------------------------------");
+                    System.out.println("                                           |         ");
+                    System.out.printf("%-42s | %9.2f $%n", "TOTAL", total);
+
+                    // Mise à jour
+                    recettes += sousTotal;  //
+                    numeroFacture++; // Increment le numero de facture +1
+
+                    // Pause
+                    System.out.print(MSG_ENTER); // Invite l'utilisateur à appuyer sur enter pour continuer
+                    Clavier.lireFinLigne(); // Attend que l'utilisateur appuie sur Enter
+                    break;    // Quitte ce bloc de code et retourne au menu principal
+                }
+
+                // ---------- OPTION 2 : RECETTES ----------
+                case '2' : {
+                    System.out.println(RECET);
+                    System.out.printf("TOTAL : %,.2f $%n", recettes);//%,.2f: le ',' affiche le séparateur des milliers
+                     //.2f affiche 2 chiffres après la virgule.$%n:ajoute le symbole du dollar et un saut de ligne
+                    System.out.print(MSG_ENTER);// Invite l'utilisateur à appuyer sur enter pour continuer
+                    Clavier.lireFinLigne();// Attend que l'utilisateur appuie sur Enter
+                    break;    // Quitte ce bloc de code et retourne au menu principal
+                }
+
+                // ---------- OPTION 3 : REINITIALISER ----------
+                case '3' : {
+                    System.out.println(REIN_RECET);  //affiche mesage de REINITIALISATION RECETTE
+                    System.out.print(DEMANDE_REI);   // Demande si on veut reinitializer ou non
+                    char rep;  // Déclare une variable de type caractère pour stocker la réponse (O ou N)
+                    do {    // Début d'une boucle de validation : on lit la réponse jusqu'à ce qu'elle soit O ou N
+                        rep = Clavier.lireCharLn();    // Lit le premier caractère saisi par l'utilisateur
+                        if (rep >= 'a' && rep <= 'z') // Si la lettre est minuscule (entre 'a' et 'z')
+                            rep = (char)(rep - 'a' + 'A');  // La convertit en majuscule )
+                        if (rep != 'O' && rep != 'N')       // Si la réponse n'est pas 'O' ni 'N'
+                            System.out.println(MSG_ON_ERR); // Affiche un message d'erreur et redemande
+                    } while (rep != 'O' && rep != 'N');     // Répète tant que la réponse n'est pas valide
+
+                    if (rep == 'O') {        // Si l'utilisateur a répondu 'O' (oui)
+                        recettes = 0.0;      // Réinitialise le montant total des recettes à zéro
+                        System.out.println("\n*** Le montant des recettes a bien ete reinitialise.");
+                    } else {                // Sinon, si la réponse est 'N'
+                        System.out.println("\n*** Operation annulee.");  // Informe que l’opération est annulée
+                    }
+                    System.out.print(MSG_ENTER);   // Invite l'utilisateur à appuyer sur enter pour continuer
+                    Clavier.lireFinLigne(); // Attend que l'utilisateur appuie sur Enter
+
+                    break;    // Quitte ce bloc de code et retourne au menu principal
+                }
+
+                // ---------- OPTION 4 : QUITTER ----------
                 case '4' : {
                     quitterMenu = true;               // boleen pour sortir du programme
                     System.out.print(FIN_MSG);        // affichage du programme
-                    break;
+                    break;   // Quite le programme
                 }
             }
         }
     }
 }
-   
